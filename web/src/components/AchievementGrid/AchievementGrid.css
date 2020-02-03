@@ -1,0 +1,23 @@
+.AchievementGrid {
+    width: 100%;
+}
+
+.AchievementGrid table {
+    border-collapse: collapse;
+    text-align: left;
+    width: 100%;
+}
+
+.AchievementGrid table tbody tr:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.AchievementGrid table tr:nth-child(even) {
+    background-color: rgba(255,255,255,0.1);
+}
+
+
+.AchievementGrid table td {
+    border: 1px solid #28396b;
+    padding: 5px;
+}
