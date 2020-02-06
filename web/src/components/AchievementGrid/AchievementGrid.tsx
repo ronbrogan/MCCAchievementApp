@@ -54,14 +54,14 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
     private getFilteredRows = () : any[] => {
         var rows = this.props.Data;
 
-        if(this.props.Filter.categoryFilter != "Any")
+        if(this.props.Filter.categoryFilter !== "Any")
         {
-            rows = rows.filter(r => r.Category == this.props.Filter.categoryFilter);
+            rows = rows.filter(r => r.Category === this.props.Filter.categoryFilter);
         }
 
-        if(this.props.Filter.subcategoryFilter != "Any")
+        if(this.props.Filter.subcategoryFilter !== "Any")
         {
-            rows = rows.filter(r => r.Subcategory == this.props.Filter.subcategoryFilter);
+            rows = rows.filter(r => r.Subcategory === this.props.Filter.subcategoryFilter);
         }
 
         return rows;

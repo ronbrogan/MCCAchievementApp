@@ -18,7 +18,11 @@ export default class AchievementRow extends React.Component<AchievementRowProps,
         return (
             <tr className="AchievementRow">
                    {this.props.Columns.map(col => (
-                        <td key={col.accessor}>{this.props.Achievement[col.accessor]}</td>
+                        <td key={col.accessor}>
+                            {(col.accessor === "GuideLink") 
+                            ? <a href={this.props.Achievement[col.accessor]}>{this.props.Achievement[col.accessor]}</a>
+                            : this.props.Achievement[col.accessor]}
+                        </td>
                     ))} 
             </tr>);
     }

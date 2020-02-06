@@ -1,6 +1,5 @@
 import React from 'react';
 import AchievementExplorerFilterOptions from '../AchievementExplorer/AchievementExplorerFilterOptions';
-import { throwStatement } from '@babel/types';
 
 interface AchievementFilterProps {
     Data: any[],
@@ -27,15 +26,15 @@ export default class AchievementFilter extends React.Component<AchievementFilter
     notifyFilterChange = (event: React.FormEvent<HTMLSelectElement>) => {
         var stateProp = event.currentTarget.getAttribute("data-filter-accessor");
 
-        if(stateProp == null)
+        if(stateProp === null)
             return;
 
         this.filterOptions[(stateProp as string)] = event.currentTarget.value;
 
         // Ensure that the existing subcategory selection is valid for the new category selection, otherwise reset to Any
-        if(stateProp == "categoryFilter" && this.filterOptions.categoryFilter != "Any")
+        if(stateProp === "categoryFilter" && this.filterOptions.categoryFilter !== "Any")
         {
-            let subcatIsValid = this.props.Data.filter(r => r.Category == this.filterOptions.categoryFilter)
+            let subcatIsValid = this.props.Data.filter(r => r.Category === this.filterOptions.categoryFilter)
                 .map(r => r.Subcategory)
                 .indexOf(this.filterOptions.subcategoryFilter) >= 0;
 
@@ -55,13 +54,13 @@ export default class AchievementFilter extends React.Component<AchievementFilter
 
         const filter = this.state.Filter;
 
-        if(filter.categoryFilter == "Any")
+        if(filter.categoryFilter === "Any")
         {
             subcats = ["Any", ...new Set(this.props.Data.map(r => r.Subcategory))];
         }
         else
         {
-            subcats = ["Any", ...new Set(this.props.Data.filter(r => r.Category == filter.categoryFilter).map(r => r.Subcategory))];
+            subcats = ["Any", ...new Set(this.props.Data.filter(r => r.Category === filter.categoryFilter).map(r => r.Subcategory))];
         }
 
         return (
