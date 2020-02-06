@@ -46,6 +46,18 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
                 {
                     "Header": "GuideTimestamp",
                     "accessor": "GuideTimestamp"
+                },
+                {
+                    "Header": "Rare",
+                    "accessor": "IsRare"
+                },
+                {
+                    "Header": "Gamerscore",
+                    "accessor": "Gamerscore"
+                },
+                {
+                    "Header": "Progression Target",
+                    "accessor": "ProgressionTarget"
                 }
             ]
         };
