@@ -1,10 +1,10 @@
 import React from 'react';
+import { ColumnSpec } from '../AchievementGrid/AchievementGrid';
 
 interface AchievementRowProps
 {
     Achievement: any,
-    Columns: {Header: string, accessor: string}[],
-    ProgressionState: any
+    Columns: ColumnSpec[]
 }
 
 export default class AchievementRow extends React.Component<AchievementRowProps, any, any>
@@ -17,12 +17,19 @@ export default class AchievementRow extends React.Component<AchievementRowProps,
     render() {
         return (
             <tr className="AchievementRow">
-                   {this.props.Columns.map(col => (
-                        <td key={col.accessor}>
-                            {(col.accessor === "GuideLink") 
-                            ? <a href={this.props.Achievement[col.accessor]}>{this.props.Achievement[col.accessor]}</a>
-                            : this.props.Achievement[col.accessor]}
-                        </td>
+                    {this.props.Columns.filter(c => c.condition ? c.condition(this.props.Achievement) : true).map(col => (
+                        col.isHtml ? (
+                            <td key={col.accessor.toString()} dangerouslySetInnerHTML={ (typeof col.accessor == 'string') 
+                                ? { __html: this.props.Achievement[col.accessor] }
+                                : { __html: col.accessor(this.props.Achievement)}}>
+                            </td>
+                        ) : (
+                            <td key={col.accessor.toString()}>
+                                {(typeof col.accessor == 'string') 
+                                    ? this.props.Achievement[col.accessor]
+                                    : col.accessor(this.props.Achievement)}
+                            </td>
+                        )
                     ))} 
             </tr>);
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import MccApi from '../../services/MccApi';
 
 interface ProgressionAuthorizerState
 {
@@ -7,7 +8,8 @@ interface ProgressionAuthorizerState
 
 interface ProgressionAuthorizerProps
 {
-    onAuthorized: () => void | null
+    onAuthorized: () => void | null,
+    api: MccApi
 }
 
 export default class ProgressionAuthorizer extends React.Component<ProgressionAuthorizerProps, ProgressionAuthorizerState, any>
@@ -19,20 +21,19 @@ export default class ProgressionAuthorizer extends React.Component<ProgressionAu
     {
         super(props);
 
-        this.state = {loggedIn: false};
+        this.state = {loggedIn: this.props.api.isAuthorized()};
     }
 
-    private loginToXboxLive = () =>
+    private loginToXboxLive = async () =>
     {
         let w = window.open(this.oauthUrl, undefined, "height=400,width=400,status=yes,toolbar=no,menubar=no,location=no") as Window;
 
-        w.onload = () => {
+        w.onload = async () => {
             var url = w.location.toString();
 
             var params = new URLSearchParams(url.substr(url.indexOf("#") + 1));
 
             let token = params.get("access_token");
-            let userId = params.get("user_id");
 
             if(token !== null)
             {
@@ -42,25 +43,32 @@ export default class ProgressionAuthorizer extends React.Component<ProgressionAu
             {
                 w.document.clear();
                 w.document.write("<h1>Error authenticating, close this window and try again</h1>");
+                return;
             }
 
-            console.log(token);
-            console.log(userId);
+            await this.props.api.authorize(token);
+            this.setState({loggedIn: this.props.api.isAuthorized()});
+            this.props.onAuthorized();
         }
+    }
+
+    private signOut = () => 
+    {
+        this.props.api.signOut();
     }
 
     render()
     {
-        if(this.state.loggedIn === false) {
+        if(!this.state.loggedIn) {
             return (
-                <p><a href="#" onClick={this.loginToXboxLive}>Login to Xbox Live to view your progression</a></p>
+                <p><button onClick={this.loginToXboxLive}>Login to Xbox Live to view your progression</button></p>
             )
         }
 
         return (
             <div>
                 <p>Logged in to Xbox Live!</p>
-                <a href="#">Sign Out</a>
+                <button onClick={this.signOut}>Sign Out</button>
             </div>  
         );
     }

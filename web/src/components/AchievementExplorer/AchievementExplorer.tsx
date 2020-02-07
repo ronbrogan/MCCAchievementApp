@@ -2,40 +2,47 @@ import React from 'react';
 import AcheivementGrid from '../AchievementGrid/AchievementGrid';
 import AchievementExplorerFilterOptions from './AchievementExplorerFilterOptions';
 import AchievementFilter from '../AchievementFilter/AchievementFilter';
+import MccApi from '../../services/MccApi';
 
-interface AchievementExplorerProps
-{
+interface AchievementExplorerProps {
+    api: MccApi,
+    Data: any[]
 }
 
-interface AchievementExplorerState
-{
-    Data: any[],
-    Filter: AchievementExplorerFilterOptions
+interface AchievementExplorerState {
+    Filter: AchievementExplorerFilterOptions,
+    ProgressionData: any[]
 }
 
 export default class AchievementExplorer extends React.Component<AchievementExplorerProps, AchievementExplorerState, any>
 {
-    public constructor(props : AchievementExplorerProps)
-    {
+    public constructor(props: AchievementExplorerProps) {
         super(props);
-        this.state = {Data: [], Filter: new AchievementExplorerFilterOptions()};
+        this.state = { Filter: new AchievementExplorerFilterOptions(), ProgressionData:[] };
     }
 
     handleFilterChange = (filter: AchievementExplorerFilterOptions) => {
-        this.setState({Filter: filter});
+        this.setState({ Filter: filter });
     }
 
-    async componentDidMount() {
-        const resp = await fetch("/data/AnnotatedMCCAchievements.json");
-        const json = await resp.json();
-        this.setState({Data: json});
+    async componentDidUpdate() {
+        if(this.props.api.isAuthorized() && this.state.ProgressionData.length === 0)
+        {
+            var progressionData = await this.props.api.getAchievements();
+            this.setState({ProgressionData: progressionData});
+        }
     }
 
     render() {
-        return (
-            <div className="AchievementExplorer">
-                <AchievementFilter OnFilterChange={this.handleFilterChange} Data={this.state.Data}></AchievementFilter>
-                <AcheivementGrid Filter={this.state.Filter} Data={this.state.Data}></AcheivementGrid>
-            </div>);
+        if (!!this.props.Data) {
+            return (
+                <div className="AchievementExplorer">
+                    <AchievementFilter OnFilterChange={this.handleFilterChange} Data={this.props.Data}></AchievementFilter>
+                    <AcheivementGrid Filter={this.state.Filter} Data={this.props.Data} ProgressionData={this.state.ProgressionData}></AcheivementGrid>
+                </div>);
+        }
+        else {
+            return (<p>loading</p>)
+        }
     }
 }
