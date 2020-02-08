@@ -15,7 +15,7 @@ interface ProgressionAuthorizerProps
 export default class ProgressionAuthorizer extends React.Component<ProgressionAuthorizerProps, ProgressionAuthorizerState, any>
 {
     private loggedIn: boolean = false;
-    private oauthUrl: string = "https://login.live.com/oauth20_authorize.srf?client_id=000000004037470C&response_type=token&scope=Xboxlive.signin+Xboxlive.offline_access&redirect_uri=https://localhost.mccachievement.app/oauth";
+    private oauthUrl: string = "https://login.live.com/oauth20_authorize.srf?client_id=000000004037470C&response_type=token&scope=Xboxlive.signin&redirect_uri=https://mccachievement.app/oauth";
 
     public constructor(props: any)
     {
