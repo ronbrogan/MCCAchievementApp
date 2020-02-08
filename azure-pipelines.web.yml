@@ -13,7 +13,7 @@ variables:
   # Working Directory
   workingDirectory: '$(System.DefaultWorkingDirectory)/web'
 
-  storageAccount: $web
+  storageAccount: mccachievementapi
 
 stages:
 - stage: Build
@@ -68,7 +68,7 @@ stages:
               azureSubscription: $(azureSubscription)
               destination: AzureBlob
               storage: $(storageAccount)
-              containerName: mccachievementapp-web
+              containerName: $web
               #additionalArgumentsForBlobCopy: # Optional
               #additionalArgumentsForVMCopy: # Optional
               #enableCopyPrerequisites: false # Optional
