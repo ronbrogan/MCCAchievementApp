@@ -13,7 +13,7 @@ variables:
   # Working Directory
   workingDirectory: '$(System.DefaultWorkingDirectory)/web'
 
-  storageAccount: mccachievementapi
+  storageAccount: \$web
 
 stages:
 - stage: Build
