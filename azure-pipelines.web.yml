@@ -68,7 +68,7 @@ stages:
               azureSubscription: $(azureSubscription)
               destination: AzureBlob
               storage: $(storageAccount)
-              containerName: mccachievementapp-web
+              containerName: $web
               #additionalArgumentsForBlobCopy: # Optional
               #additionalArgumentsForVMCopy: # Optional
               #enableCopyPrerequisites: false # Optional
