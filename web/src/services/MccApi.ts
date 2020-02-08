@@ -21,13 +21,18 @@ interface AchievementProgression
 
 export default class MccApi
 {
-    private apiBase = "http://localhost:7071/api/";
+    private apiBase = "https://mccachievement.app/api/";
     private authStorageKey = "MccAuthInfo";
 
     private authInfo: XboxAuthResponse = {} as XboxAuthResponse;
 
     constructor()
     {
+        if(process.env.NODE_ENV !== "production")
+        {
+            this.apiBase = "http://mccachievement.app/api/";
+        }
+
         var json = window.localStorage.getItem(this.authStorageKey);
 
         if(json !== null)
