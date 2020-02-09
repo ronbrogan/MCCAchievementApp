@@ -107,9 +107,9 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
         return (<div className="AchievementGrid">
             <table>
                 <thead>
-                    <tr>
+                    <tr className="AchievementRow">
                         {this.state.columns.filter(c => c.condition ? c.condition(rows[0]) : true).map(col => (
-                            <th key={col.Header}>{col.Header}</th>
+                            <th key={col.Header} className={col.Header}>{col.Header}</th>
                         ))}
                     </tr>
                 </thead>

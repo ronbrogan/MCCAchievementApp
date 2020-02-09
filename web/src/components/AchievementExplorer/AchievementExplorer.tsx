@@ -12,7 +12,8 @@ interface AchievementExplorerProps {
 
 interface AchievementExplorerState {
     Filter: AchievementExplorerFilterOptions,
-    ProgressionData: any[]
+    ProgressionData: any[],
+    LoadingProgressionData: boolean
 }
 
 export default class AchievementExplorer extends React.Component<AchievementExplorerProps, AchievementExplorerState, any>
@@ -34,7 +35,7 @@ export default class AchievementExplorer extends React.Component<AchievementExpl
             initialFilter = new AchievementExplorerFilterOptions();
         }
 
-        this.state = { Filter: initialFilter, ProgressionData:[] };
+        this.state = { Filter: initialFilter, ProgressionData:[], LoadingProgressionData: false };
     }
 
     handleFilterChange = (filter: AchievementExplorerFilterOptions) => {
@@ -42,16 +43,17 @@ export default class AchievementExplorer extends React.Component<AchievementExpl
         this.setState({ Filter: filter });
     }
 
-    async componentDidUpdate() {
-        if(this.props.LoggedIn && this.state.ProgressionData.length === 0)
+    async componentDidUpdate(prevProps: AchievementExplorerProps) {
+        if(prevProps.LoggedIn === false && this.props.LoggedIn)
         {
+            this.setState({LoadingProgressionData: true});
             var progressionData = await this.props.api.getAchievements();
-            this.setState({ProgressionData: progressionData});
+            this.setState({ProgressionData: progressionData, LoadingProgressionData: false});
         }
     }
 
     render() {
-        if (!!this.props.Data) {
+        if (!!this.props.Data && !this.state.LoadingProgressionData) {
             return (
                 <div className="AchievementExplorer">
                     <AchievementFilter OnFilterChange={this.handleFilterChange} Data={this.props.Data} Filter={this.state.Filter}></AchievementFilter>

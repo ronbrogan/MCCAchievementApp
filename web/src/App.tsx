@@ -10,13 +10,13 @@ export default class App extends React.Component<any, any, any> {
     constructor(props:any)
     {
         super(props);
-        this.state = {loggedIn: this.mccApi.isAuthorized()};
+        this.state = {loggedIn: false};
     }
 
     async componentDidMount() {
         const resp = await fetch("/data/AnnotatedMCCAchievements.json");
         const json = await resp.json();
-        this.setState({Data: json});
+        this.setState({Data: json, loggedIn: this.mccApi.isAuthorized()});
     }
 
     progressionAuthCallback = () => {
