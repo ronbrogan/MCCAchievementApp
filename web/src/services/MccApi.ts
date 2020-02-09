@@ -21,7 +21,7 @@ interface AchievementProgression
 
 export default class MccApi
 {
-    private apiBase = "https://mccachievement.app/api/";
+    private apiBase = "https://api.mccachievement.app/api/";
     private authStorageKey = "MccAuthInfo";
 
     private authInfo: XboxAuthResponse = {} as XboxAuthResponse;
