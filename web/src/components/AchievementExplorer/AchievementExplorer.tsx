@@ -6,7 +6,8 @@ import MccApi from '../../services/MccApi';
 
 interface AchievementExplorerProps {
     api: MccApi,
-    Data: any[]
+    Data: any[],
+    LoggedIn: boolean
 }
 
 interface AchievementExplorerState {
@@ -42,7 +43,7 @@ export default class AchievementExplorer extends React.Component<AchievementExpl
     }
 
     async componentDidUpdate() {
-        if(this.props.api.isAuthorized() && this.state.ProgressionData.length === 0)
+        if(this.props.LoggedIn && this.state.ProgressionData.length === 0)
         {
             var progressionData = await this.props.api.getAchievements();
             this.setState({ProgressionData: progressionData});

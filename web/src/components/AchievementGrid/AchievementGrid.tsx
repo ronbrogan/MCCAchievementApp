@@ -30,7 +30,8 @@ interface RowContainer
 export default class AcheivementGrid extends React.Component<AchievementGridProps, AchievementGridState, any>
 {
     public getDetails = (r: any)  => {
-        var html = "<strong>" + r.Name + "</strong> &nbsp; <i class='glyph glyph-gamerscore'></i><strong>" + r.Gamerscore + "</strong><br />"
+        var html = "<strong>" + r.Name + "</strong> &nbsp; <i class='glyph glyph-gamerscore'></i><strong>" + r.Gamerscore + "</strong>" 
+        + (r.IsRare ? (" &nbsp; <i class='glyph glyph-diamond'></i>" + r.Rarity + "%") : "") + "<br />"
         + "<span class='subheading'>" + r.Description + "</span>" ;
         
         if(r.GuideLink)

@@ -31,7 +31,7 @@ export default class App extends React.Component<any, any, any> {
                     <ProgressionAuthorizer onAuthorized={this.progressionAuthCallback} api={this.mccApi}></ProgressionAuthorizer>
                 </header>
                 
-                <AchievementExplorer api={this.mccApi} key={this.state.loggedIn.toString()} Data={this.state.Data}></AchievementExplorer>
+                <AchievementExplorer api={this.mccApi} LoggedIn={this.state.loggedIn} Data={this.state.Data}></AchievementExplorer>
             </div>
         );
     }
