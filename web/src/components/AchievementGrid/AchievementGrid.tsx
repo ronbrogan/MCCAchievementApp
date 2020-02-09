@@ -29,21 +29,22 @@ interface RowContainer
 
 export default class AcheivementGrid extends React.Component<AchievementGridProps, AchievementGridState, any>
 {
-    public getDescription = (r: any)  => {
-        var html = "<span>" + r.Description + "</span>" ;
+    public getDetails = (r: any)  => {
+        var html = "<strong>" + r.Name + "</strong> &nbsp; <i class='glyph glyph-gamerscore'></i><strong>" + r.Gamerscore + "</strong><br />"
+        + "<span class='subheading'>" + r.Description + "</span>" ;
         
         if(r.GuideLink)
         {
             if(r.GuideTimestamp)
             {
                 let parts = r.GuideTimestamp.split(":").map((t: any) => parseInt(t));
-                let seconds = parts[0] * 60 + parts[1];
+                let seconds = isNaN(parts[0]) ? 0 : (parts[0] * 60) + parts[1];
 
-                html += " <a href='" + r.GuideLink + "?t=" + seconds + "'>[help]</a>";
+                html += " &nbsp; <a href='" + r.GuideLink + "?t=" + seconds + "'>[help]</a>";
             }
             else
             {
-                html += "<a href='" + r.GuideLink + "'>[help]</a>";
+                html += " &nbsp; <a href='" + r.GuideLink + "'>[help]</a>";
             }
         } 
 
@@ -57,28 +58,12 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
             columns: [
                 {
                     "Header": "Category",
-                    "accessor": "Category"
+                    "accessor": r => r.Category + " // " + r.Subcategory
                 },
                 {
-                    "Header": "Subcategory",
-                    "accessor": "Subcategory"
-                },
-                {
-                    "Header": "Name",
-                    "accessor": "Name"
-                },
-                {
-                    "Header": "Description",
-                    "accessor": r => this.getDescription(r),
+                    "Header": "Details",
+                    "accessor": r => this.getDetails(r),
                     "isHtml": true
-                },
-                // {
-                //     "Header": "GuideLink",
-                //     "accessor": r => r.GuideLink + (r.GuideTimestamp ? (" @ " + r.GuideTimestamp) : "")
-                // },
-                {
-                    "Header": "Gamerscore",
-                    "accessor": "Gamerscore"
                 },
                 {
                     "Header": "Progression Target",
@@ -87,8 +72,9 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
                 },
                 {
                     "Header": "Progression",
-                    "accessor": r => r.isUnlocked ? "✅" : r.progressionSummary,
-                    "condition": r => !!r.progressionSummary
+                    "accessor": r => r.isUnlocked ? "<span title='" + r.progressionSummary +"'>✅</span>" : r.progressionSummary,
+                    "condition": r => !!r.progressionSummary,
+                    "isHtml": true
                 }
             ]
         };

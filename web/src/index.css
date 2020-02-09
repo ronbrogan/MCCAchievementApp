@@ -41,6 +41,10 @@ button {
   border-radius: 3px;
 }
 
+.subheading {
+  color: #ddd;
+}
+
 @font-face {
   font-family:"xboxfont";
   src:url("/fonts/SegXBox2.ttf") format("truetype")

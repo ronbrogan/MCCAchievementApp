@@ -1,4 +1,4 @@
-
+import MccConfig from "../MccConfig"
 
 
 interface XboxAuthResponse
@@ -21,18 +21,13 @@ interface AchievementProgression
 
 export default class MccApi
 {
-    private apiBase = "https://api.mccachievement.app/api/";
+    private apiBase = MccConfig.ApiBase;
     private authStorageKey = "MccAuthInfo";
 
     private authInfo: XboxAuthResponse = {} as XboxAuthResponse;
 
     constructor()
     {
-        if(process.env.NODE_ENV !== "production")
-        {
-            this.apiBase = "http://mccachievement.app/api/";
-        }
-
         var json = window.localStorage.getItem(this.authStorageKey);
 
         if(json !== null)
@@ -44,6 +39,11 @@ export default class MccApi
     public isAuthorized(): boolean 
     {
         return !!this.authInfo.token;
+    }
+
+    public gamertag() : string
+    {
+        return this.authInfo.gamertag;
     }
 
     async authorize(oauthToken: string) : Promise<void>

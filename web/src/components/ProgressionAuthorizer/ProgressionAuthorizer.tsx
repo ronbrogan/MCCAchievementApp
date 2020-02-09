@@ -1,9 +1,11 @@
 import React from 'react';
 import MccApi from '../../services/MccApi';
+import MccConfig from '../../MccConfig';
 
 interface ProgressionAuthorizerState
 {
-    loggedIn: boolean
+    loggedIn: boolean,
+    gamertag: string
 }
 
 interface ProgressionAuthorizerProps
@@ -15,13 +17,13 @@ interface ProgressionAuthorizerProps
 export default class ProgressionAuthorizer extends React.Component<ProgressionAuthorizerProps, ProgressionAuthorizerState, any>
 {
     private loggedIn: boolean = false;
-    private oauthUrl: string = "https://login.live.com/oauth20_authorize.srf?client_id=000000004037470C&response_type=token&scope=Xboxlive.signin&redirect_uri=https://mccachievement.app/oauth";
+    private oauthUrl: string = "https://login.live.com/oauth20_authorize.srf?client_id=000000004037470C&response_type=token&scope=Xboxlive.signin&redirect_uri=" + MccConfig.OauthUrl;
 
     public constructor(props: any)
     {
         super(props);
 
-        this.state = {loggedIn: this.props.api.isAuthorized()};
+        this.state = {loggedIn: this.props.api.isAuthorized(), gamertag: this.props.api.gamertag()};
     }
 
     private loginToXboxLive = async () =>
@@ -47,7 +49,7 @@ export default class ProgressionAuthorizer extends React.Component<ProgressionAu
             }
 
             await this.props.api.authorize(token);
-            this.setState({loggedIn: this.props.api.isAuthorized()});
+            this.setState({loggedIn: this.props.api.isAuthorized(), gamertag: this.props.api.gamertag()});
             this.props.onAuthorized();
         }
     }
@@ -67,7 +69,7 @@ export default class ProgressionAuthorizer extends React.Component<ProgressionAu
 
         return (
             <div>
-                <p>Logged in to Xbox Live!</p>
+                <p>Logged in as {this.state.gamertag}</p>
                 <button onClick={this.signOut}>Sign Out</button>
             </div>  
         );
