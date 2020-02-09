@@ -5,7 +5,7 @@ interface XboxAuthResponse
 {
     token: string,
     gamertag: string,
-    expiration: Date
+    expiration: string
 }
 
 interface AchievementProgression
@@ -23,7 +23,9 @@ export default class MccApi
 {
     private apiBase = MccConfig.ApiBase;
     private authStorageKey = "MccAuthInfo";
+    private tempOauthKey = "MccTemporaryOauth";
 
+    private oauthCallback: () => void;
     private authInfo: XboxAuthResponse = {} as XboxAuthResponse;
 
     constructor()
@@ -34,6 +36,8 @@ export default class MccApi
         {
             this.authInfo = JSON.parse(json);
         }
+
+        this.oauthCallback = () => {return;};
     }
 
     public isAuthorized(): boolean 
@@ -44,6 +48,21 @@ export default class MccApi
     public gamertag() : string
     {
         return this.authInfo.gamertag;
+    }
+
+    public async checkForRedirectedOauth() : Promise<void> {
+        var tempOauth = window.localStorage.getItem(this.tempOauthKey);
+
+        if(tempOauth)
+        {
+            this.authInfo = {} as XboxAuthResponse;
+            window.localStorage.removeItem(this.tempOauthKey);
+            await this.authorize(tempOauth);
+        }
+    }
+
+    public useOauthForReauth(callback: ()=> void) : void {
+        this.oauthCallback = callback;
     }
 
     async authorize(oauthToken: string) : Promise<void>
@@ -62,8 +81,9 @@ export default class MccApi
         window.location.reload();
     }
 
-    async getAchievements() : Promise<AchievementProgression[]> 
+    async getAchievements(i?: number) : Promise<AchievementProgression[]> 
     {
+        i = i || 0;
         if(!this.isAuthorized())
         {
             throw new Error("No auth present");
@@ -74,7 +94,25 @@ export default class MccApi
 
         if(resp.ok === false)
         {
-            throw new Error("Error getting achievements: " + resp.status);
+            if(new Date(this.authInfo.expiration) < new Date())
+            {
+                console.warn("Failure getting achievements, likely due to expired tokens. Relogging in...");
+                this.oauthCallback();
+                return [];
+            }
+            else
+            {
+                console.warn("Unknown error, retrying");
+                if(i < 3)
+                {
+                    return await this.getAchievements(++i);
+                }
+                else
+                {
+                    console.error("Could not load achievements after reties, logging out");
+                    this.signOut();
+                }
+            }
         }
 
         return await resp.json() as AchievementProgression[];

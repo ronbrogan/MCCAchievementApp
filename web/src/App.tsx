@@ -16,6 +16,9 @@ export default class App extends React.Component<any, any, any> {
     async componentDidMount() {
         const resp = await fetch("/data/AnnotatedMCCAchievements.json");
         const json = await resp.json();
+
+        await this.mccApi.checkForRedirectedOauth();
+
         this.setState({Data: json, loggedIn: this.mccApi.isAuthorized()});
     }
 

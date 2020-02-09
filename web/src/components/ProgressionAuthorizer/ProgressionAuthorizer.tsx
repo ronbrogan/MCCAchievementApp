@@ -21,12 +21,19 @@ export default class ProgressionAuthorizer extends React.Component<ProgressionAu
     public constructor(props: any)
     {
         super(props);
-
         this.state = {loggedIn: this.props.api.isAuthorized(), gamertag: this.props.api.gamertag()};
+        this.props.api.useOauthForReauth(this.loginToXboxLive);
     }
 
-    private loginToXboxLive = async () =>
+    private loginToXboxLive = async (event?: any) =>
     {
+        // didn't come from user click, can't popup
+        if(event === undefined)
+        {
+            window.location.href = this.oauthUrl;
+            return;
+        }
+
         let w = window.open(this.oauthUrl, undefined, "height=400,width=400,status=yes,toolbar=no,menubar=no,location=no") as Window;
 
         w.onload = async () => {

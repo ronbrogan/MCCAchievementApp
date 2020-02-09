@@ -1,4 +1,5 @@
 ﻿using MccAchievementApp.Api.Auth;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -38,9 +39,22 @@ namespace MccAchievementApp.Api
 
 			var response = await httpClient.SendAsync(request);
 
-			var content = await response.Content.ReadAsStringAsync();
-
-			return JsonSerializer.Deserialize<ApiResponse<Achievement>>(content, jsonOptions);
+			if(response.IsSuccessStatusCode)
+			{
+				try
+				{
+					var content = await response.Content.ReadAsStringAsync();
+					return JsonSerializer.Deserialize<ApiResponse<Achievement>>(content, jsonOptions);
+				}
+				catch(Exception e)
+				{
+					throw new Exception("Error deserializing achievments from Xbox API", e);
+				}
+			}
+			else
+			{
+				throw new Exception("Error getting achievements from Xbox API: [" + response.StatusCode + "] " + response.ReasonPhrase);
+			}
 		}
 	}
 
