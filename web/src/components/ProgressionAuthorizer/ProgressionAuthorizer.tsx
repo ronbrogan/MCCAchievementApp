@@ -68,8 +68,8 @@ export default class ProgressionAuthorizer extends React.Component<ProgressionAu
 
         return (
             <div>
-                <p>Logged in as {this.state.gamertag}</p>
                 <button onClick={this.signOut}>Sign Out</button>
+                <p>Logged in as {this.state.gamertag}</p>
             </div>  
         );
     }
