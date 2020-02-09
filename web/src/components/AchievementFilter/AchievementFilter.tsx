@@ -3,7 +3,8 @@ import AchievementExplorerFilterOptions from '../AchievementExplorer/Achievement
 
 interface AchievementFilterProps {
     Data: any[],
-    OnFilterChange: (filter: AchievementExplorerFilterOptions) => void
+    OnFilterChange: (filter: AchievementExplorerFilterOptions) => void,
+    Filter: AchievementExplorerFilterOptions
 }
 
 interface AchievementFilterState {
@@ -19,8 +20,7 @@ export default class AchievementFilter extends React.Component<AchievementFilter
 
     public constructor(props: AchievementFilterProps) {
         super(props);
-        this.props.OnFilterChange(this.filterOptions);
-        this.state = {Filter: this.filterOptions};
+        this.state = {Filter: this.props.Filter};
     }
 
     notifyFilterChange = (event: React.FormEvent<HTMLSelectElement>) => {

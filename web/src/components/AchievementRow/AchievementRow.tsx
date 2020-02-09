@@ -16,7 +16,7 @@ export default class AchievementRow extends React.Component<AchievementRowProps,
 
     render() {
         return (
-            <tr className="AchievementRow">
+            <tr className="AchievementRow full">
                     {this.props.Columns.filter(c => c.condition ? c.condition(this.props.Achievement) : true).map(col => (
                         col.isHtml ? (
                             <td key={col.accessor.toString()} dangerouslySetInnerHTML={ (typeof col.accessor == 'string') 
@@ -32,5 +32,6 @@ export default class AchievementRow extends React.Component<AchievementRowProps,
                         )
                     ))} 
             </tr>);
+            
     }
 }

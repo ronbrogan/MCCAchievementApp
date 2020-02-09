@@ -16,12 +16,28 @@ interface AchievementExplorerState {
 
 export default class AchievementExplorer extends React.Component<AchievementExplorerProps, AchievementExplorerState, any>
 {
+    private filterStorageKey = "MccFilterState";
+
     public constructor(props: AchievementExplorerProps) {
         super(props);
-        this.state = { Filter: new AchievementExplorerFilterOptions(), ProgressionData:[] };
+
+        let storedFilterJson = window.localStorage.getItem(this.filterStorageKey);
+        let initialFilter: AchievementExplorerFilterOptions;
+
+        if(storedFilterJson != null)
+        {
+            initialFilter = JSON.parse(storedFilterJson);
+        }
+        else
+        {
+            initialFilter = new AchievementExplorerFilterOptions();
+        }
+
+        this.state = { Filter: initialFilter, ProgressionData:[] };
     }
 
     handleFilterChange = (filter: AchievementExplorerFilterOptions) => {
+        window.localStorage.setItem(this.filterStorageKey, JSON.stringify(filter));
         this.setState({ Filter: filter });
     }
 
@@ -37,7 +53,7 @@ export default class AchievementExplorer extends React.Component<AchievementExpl
         if (!!this.props.Data) {
             return (
                 <div className="AchievementExplorer">
-                    <AchievementFilter OnFilterChange={this.handleFilterChange} Data={this.props.Data}></AchievementFilter>
+                    <AchievementFilter OnFilterChange={this.handleFilterChange} Data={this.props.Data} Filter={this.state.Filter}></AchievementFilter>
                     <AcheivementGrid Filter={this.state.Filter} Data={this.props.Data} ProgressionData={this.state.ProgressionData}></AcheivementGrid>
                 </div>);
         }
