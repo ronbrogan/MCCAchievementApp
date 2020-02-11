@@ -21,6 +21,7 @@ export default class AchievementFilter extends React.Component<AchievementFilter
     public constructor(props: AchievementFilterProps) {
         super(props);
         this.state = {Filter: this.props.Filter};
+        this.filterOptions = this.props.Filter;
     }
 
     notifyFilterChange = (event: React.FormEvent<HTMLSelectElement>) => {
