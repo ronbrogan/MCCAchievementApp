@@ -69,12 +69,13 @@ stages:
               destination: AzureBlob
               storage: $(storageAccount)
               containerName: $web
-              #additionalArgumentsForBlobCopy: # Optional
-              #additionalArgumentsForVMCopy: # Optional
-              #enableCopyPrerequisites: false # Optional
               copyFilesInParallel: true
               cleanTargetBeforeCopy: true
-              #skipCACheck: true # Optional
-              #outputStorageUri: # Optional
-              #outputStorageContainerSasToken: # Optional
-              #sasTokenTimeOutInMinutes: # Optional
+          - task: PurgeAzureCDNEndpoint@2
+            inputs:
+              ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+              ConnectedServiceNameARM: 'Visual Studio Enterprise (533de7ba-f01c-404b-bd44-3812b36bb853)'
+              ResourceGroupName: 'MccAchievementApp'
+              EndpointName: 'mccachievementapp'
+              ProfileName: 'mccachievementapp-cdn'
+              PurgeContent: '/*'
