@@ -73,7 +73,7 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
                 
             html += r.progressions.map((v, i, _) => {
 
-                var listVal = this.zeroPad(i.toString()) + ": " + v;
+                var listVal = this.zeroPad((i+1).toString()) + ": " + v;
 
                 if(map !== undefined)
                 {
