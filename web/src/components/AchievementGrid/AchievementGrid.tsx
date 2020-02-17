@@ -80,10 +80,10 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
                 if(map !== undefined)
                 {
                     if(map.length < i) {
-                        listVal = "??? " + v;
+                        listVal = "???<br class='optional'/> " + v;
                     }
                     else {
-                        listVal = "<strong>" + map[i] + ":</strong> " + v;    
+                        listVal = "<strong>" + map[i] + ":</strong><br class='optional'/> " + v;    
                     }
                 }
 

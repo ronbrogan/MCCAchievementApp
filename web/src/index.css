@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #060d1a;
@@ -10,8 +8,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 a {
@@ -29,7 +26,7 @@ select {
   border: none;
   color: #fff;
   margin: 5px;
-  -moz-user-focus:none;
+  -moz-user-focus: none;
   outline: none;
 }
 
@@ -46,126 +43,157 @@ button {
 }
 
 @font-face {
-  font-family:"xboxfont";
-  src:url("/fonts/SegXBox2.ttf") format("truetype")
- }
- .glyph {
-   font-style: normal;
- }
- .glyph-view:before {
-  content:""
- }
- .glyph-broadcast:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-crown:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-gamerscore:before {
-  content:"" !important;
-  font-family:"xboxfont" !important;
-  font-size:18px
- }
- .glyph-achievement:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-lock:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-unlock:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-eye:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-bag:before {
-  content:""
- }
- .glyph-xbox-logo:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-pin:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-achievementlocked:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-diamond:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-pencil:before {
-  content:"" !important
- }
- .glyph-select:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-left-arrow:before {
-  content:""
- }
- .glyph-settings:before {
-  content:""
- }
- .glyph-people:before {
-  content:""
- }
- .glyph-plus:before {
-  content:""
- }
- .glyph-mute:before {
-  content:""
- }
- .glyph-sound:before {
-  content:""
- }
- .glyph-mask:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-message:before {
-  content:"" !important;
-  font-family:"xboxfont" !important
- }
- .glyph-flag:before {
-  content:"" !important
- }
+  font-family: "xboxfont";
+  src: url("/fonts/SegXBox2.ttf") format("truetype")
+}
 
- details {
-   font-size: small;
- }
+.glyph {
+  font-style: normal;
+}
 
- details > summary {
+.glyph-view:before {
+  content: ""
+}
+
+.glyph-broadcast:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-crown:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-gamerscore:before {
+  content: "" !important;
+  font-family: "xboxfont" !important;
+  font-size: 18px
+}
+
+.glyph-achievement:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-lock:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-unlock:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-eye:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-bag:before {
+  content: ""
+}
+
+.glyph-xbox-logo:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-pin:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-achievementlocked:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-diamond:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-pencil:before {
+  content: "" !important
+}
+
+.glyph-select:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-left-arrow:before {
+  content: ""
+}
+
+.glyph-settings:before {
+  content: ""
+}
+
+.glyph-people:before {
+  content: ""
+}
+
+.glyph-plus:before {
+  content: ""
+}
+
+.glyph-mute:before {
+  content: ""
+}
+
+.glyph-sound:before {
+  content: ""
+}
+
+.glyph-mask:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-message:before {
+  content: "" !important;
+  font-family: "xboxfont" !important
+}
+
+.glyph-flag:before {
+  content: "" !important
+}
+
+details {
+  font-size: small;
+}
+
+details>summary {
   font-size: small;
   list-style: none;
   color: #cc9900;
   text-decoration: underline;
   cursor: pointer;
- }
+}
 
- details > summary::-webkit-details-marker {
+details>summary::-webkit-details-marker {
   display: none;
 }
 
- details[open] > summary:before {
+details[open]>summary:before {
   content: "- ";
- }
+}
 
- details > summary:before {
+details>summary:before {
   content: "+ ";
- }
+}
 
- details ul {
+details ul {
   list-style-position: inside;
   padding: 0;
   list-style: none;
- }
+}
+
+@media screen and (min-width: 600px) {
+  br.optional {
+    display: none;
+  }
+}

@@ -61,7 +61,12 @@ export default class AchievementExplorer extends React.Component<AchievementExpl
                 </div>);
         }
         else {
-            return (<p>loading</p>)
+            if(this.state.LoadingProgressionData)
+            {
+                return (<p>loading your achievement progression...</p>)
+            }
+            
+            return (<p>loading achievements...</p>)
         }
     }
 }
