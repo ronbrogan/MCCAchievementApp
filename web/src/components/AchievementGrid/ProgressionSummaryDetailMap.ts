@@ -1,5 +1,37 @@
 
 let maps = {
+    "HaloReachLevels": [
+        "Winter Contingency",
+        "ONI: Sword Base",
+        "Nightfall",
+        "Tip of the Spear",
+        "Long Night of Solace",
+        "Exodus",
+        "New Alexandria",
+        "The Package",
+        "The Pillar of Autumn"
+    ],
+    "HaloReachDatapads": [
+        "Winter Contingency - Second Structure",
+        "ONI: Sword Base - Atrium",
+        "Nightfall - Cave",
+        "Tip of the Spear - BXR Mining",
+        "Long Night of Solace - Control Room",
+        "Exodus - Jetpack Encounter",
+        "New Alexandria - ONI HQ",
+        "The Package - Cutscene Door",
+        "The Pillar of Autumn - After Boneyard",
+        "Legendary: Winter Contingency - SpecOps Elite",
+        "Legendary: ONI: Sword Base - Cliffs behind Comms",
+        "Legendary: Nightfall - Militia Encounter",
+        "Legendary: Tip of the Spear - Second AA",
+        "Legendary: Long Night of Solace - Before Stairs",
+        "Legendary: Exodus - Vents Accross from Platform",
+        "Legendary: New Alexandria - Behind/bottom",
+        "Legendary: The Package - C Turret Cliff",
+        "Legendary: The Pillar of Autumn - Boneyard Roof",
+        "Legendary: Lone Wolf - Large Pipe"
+    ],
     "Halo1Levels": [
         "Pillar of Autumn",
         "Halo",
@@ -62,6 +94,16 @@ let ProgressionSummaryDetailMap: {[key: string] : string[]}  = {
     "454": maps["Halo3Levels"],
     "455": maps["Halo3Levels"],
     "456": maps["Halo3Levels"],
+
+    "910": maps["HaloReachLevels"],
+    "911": maps["HaloReachLevels"],
+    "912": maps["HaloReachLevels"],
+    "913": maps["HaloReachLevels"],
+    "914": maps["HaloReachLevels"],
+    "924": maps["HaloReachLevels"],
+    "934": maps["HaloReachLevels"],
+
+    "973": maps["HaloReachDatapads"],
 }
 
 export default ProgressionSummaryDetailMap;
