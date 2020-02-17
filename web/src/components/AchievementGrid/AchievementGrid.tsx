@@ -2,11 +2,13 @@ import React from 'react';
 import AchievementRow from './../AchievementRow/AchievementRow';
 import AchievementExplorerFilterOptions from '../AchievementExplorer/AchievementExplorerFilterOptions';
 import './AchievementGrid.css';
+import Achievement from './../../types/Achievement';
+import ProgressionSummaryDetailMap from './ProgressionSummaryDetailMap';
 
 export interface ColumnSpec
 {
      Header: string, 
-     accessor: ((row: any) => string) | string,
+     accessor: ((row: Achievement) => string) | string,
      condition?: (row: any) => boolean,
      isHtml?: boolean
 }
@@ -52,6 +54,53 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
         return html;
     }
 
+    public getProgressionSummary = (r: Achievement) => {
+        var html = r.isUnlocked ? "<span title='" + r.progressionSummary +"'>✅</span>" : r.progressionSummary;
+
+        if(r.progressions.length > 1)        
+        {
+            console.log(r.id + " // " + r.Category + "//" + r.progressions.length);
+
+            html += "<details><summary>Details</summary><p>";
+
+            var map = ProgressionSummaryDetailMap[r.id];
+            if(map !== undefined)
+            {
+                html += "<ul class='custom'>"
+            }
+            else
+            {
+                html += "<ul>"
+            }
+                
+            html += r.progressions.map((v, i, _) => {
+
+                var listVal = this.zeroPad(i.toString()) + ": " + v;
+
+                if(map !== undefined)
+                {
+                    if(map.length < i) {
+                        listVal = "??? " + v;
+                    }
+                    else {
+                        listVal = "<strong>" + map[i] + ":</strong> " + v;    
+                    }
+                }
+
+                return "<li>" + listVal + "</li>";
+            }).join("\r\n");
+
+            html += "</ul></p></details>";
+        }
+
+        return html;
+    }
+
+    private zeroPad (str: string): string {
+        var pad = "00";
+        return pad.substring(0, pad.length - str.length) + str;
+    }
+
     public constructor(props: AchievementGridProps) {
         super(props);
 
@@ -73,7 +122,7 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
                 },
                 {
                     "Header": "Progression",
-                    "accessor": r => r.isUnlocked ? "<span title='" + r.progressionSummary +"'>✅</span>" : r.progressionSummary,
+                    "accessor": r => this.getProgressionSummary(r),
                     "condition": r => !!r.progressionSummary,
                     "isHtml": true
                 }

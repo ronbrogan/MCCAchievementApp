@@ -139,3 +139,33 @@ button {
  .glyph-flag:before {
   content:"" !important
  }
+
+ details {
+   font-size: small;
+ }
+
+ details > summary {
+  font-size: small;
+  list-style: none;
+  color: #cc9900;
+  text-decoration: underline;
+  cursor: pointer;
+ }
+
+ details > summary::-webkit-details-marker {
+  display: none;
+}
+
+ details[open] > summary:before {
+  content: "- ";
+ }
+
+ details > summary:before {
+  content: "+ ";
+ }
+
+ details ul {
+  list-style-position: inside;
+  padding: 0;
+  list-style: none;
+ }
