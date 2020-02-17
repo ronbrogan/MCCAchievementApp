@@ -59,8 +59,6 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
 
         if(r.progressions.length > 1)        
         {
-            console.log(r.id + " // " + r.Category + "//" + r.progressions.length);
-
             html += "<details><summary>Details</summary><p>";
 
             var map = ProgressionSummaryDetailMap[r.id];
