@@ -55,6 +55,11 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
     }
 
     public getProgressionSummary = (r: Achievement) => {
+        if(r.progressionSummary === undefined)
+        {
+            return r.ProgressionTarget;
+        }
+
         var html = r.isUnlocked ? "<span title='" + r.progressionSummary +"'>✅</span>" : r.progressionSummary;
 
         if(r.progressions.length > 1)        
@@ -114,14 +119,8 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
                     "isHtml": true
                 },
                 {
-                    "Header": "Progression Target",
-                    "accessor": "ProgressionTarget",
-                    "condition": r => !r.progressionSummary
-                },
-                {
                     "Header": "Progression",
                     "accessor": r => this.getProgressionSummary(r),
-                    "condition": r => !!r.progressionSummary,
                     "isHtml": true
                 }
             ]
@@ -141,12 +140,32 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
             rows = rows.filter(r => r.Subcategory === this.props.Filter.subcategoryFilter);
         }
 
-        let progressionDict = this.props.ProgressionData.reduce((p,c) => {
-            p[c.id] = c;
-            return p;
-        }, {});
+        var joinedRows :any;
+        
+        if(this.props.ProgressionData != null)
+        {
+            let progressionDict = this.props.ProgressionData.reduce((p,c) => {
+                p[c.id] = c;
+                return p;
+            }, {});
+            
+            joinedRows = rows.map(r => Object.assign(r, progressionDict[r.Id]));
+        }
+        else
+        {
+            joinedRows = rows.map(r => Object.assign(r, {progressionSummary:null}));
+        }
 
-        return rows.map(r => Object.assign(r, progressionDict[r.Id]));
+        if(this.props.Filter.progressionState == "Unlocked")
+        {
+            joinedRows = joinedRows.filter((r: { isUnlocked: any; }) => r.isUnlocked);
+        }
+        else if (this.props.Filter.progressionState == "Locked")
+        {
+            joinedRows = joinedRows.filter((r: { isUnlocked: any; }) => !r.isUnlocked);
+        }
+
+        return joinedRows;
     }
 
     render() {
@@ -154,15 +173,22 @@ export default class AcheivementGrid extends React.Component<AchievementGridProp
         return (<div className="AchievementGrid">
             <table>
                 <thead>
+                    <tr>
+                        <td colSpan={3} align={"right"}><small>{rows.length} results</small></td>
+                    </tr>
                     <tr className="AchievementRow">
-                        {this.state.columns.filter(c => c.condition ? c.condition(rows[0]) : true).map(col => (
+                        {this.state.columns.map(col => (
                             <th key={col.Header} className={col.Header}>{col.Header}</th>
                         ))}
                     </tr>
                 </thead>
                 <tbody>
-                    {rows.map(row => (
-                        <AchievementRow key={row.Id} Achievement={row} Columns={this.state.columns}></AchievementRow>
+                    {(rows.length === 0 ? 
+                    (<tr><td colSpan={3}>No results</td></tr>)
+                    :(
+                        rows.map(row => (
+                            <AchievementRow key={row.Id} Achievement={row} Columns={this.state.columns}></AchievementRow>
+                        ))
                     ))}
                 </tbody>
             </table>

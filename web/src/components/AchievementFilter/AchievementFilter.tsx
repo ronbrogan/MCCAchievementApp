@@ -15,7 +15,8 @@ export default class AchievementFilter extends React.Component<AchievementFilter
 {
     private filterOptions: AchievementExplorerFilterOptions = {
         categoryFilter: "Any", 
-        subcategoryFilter: "Any"
+        subcategoryFilter: "Any",
+        progressionState: "Any"
     };
 
     public constructor(props: AchievementFilterProps) {
@@ -66,6 +67,11 @@ export default class AchievementFilter extends React.Component<AchievementFilter
 
         return (
             <div className="AchievementFilter">
+                <select onChange={this.notifyFilterChange} value={this.state.Filter.progressionState} data-filter-accessor="progressionState">
+                    <option key="Any" value="Any">Any</option>
+                    <option key="Locked" value="Locked">Locked</option>
+                    <option key="Unlocked" value="Unlocked">Unlocked</option>
+                </select>
                 <select onChange={this.notifyFilterChange} value={this.state.Filter.categoryFilter} data-filter-accessor="categoryFilter">
                     {categories.map(c => (<option key={c} value={c}>{c}</option>))}
                 </select>

@@ -9,5 +9,6 @@ export default interface Achievement
     unlockedAt: string,
 
     Category: string,
-    Subcategory: string
+    Subcategory: string,
+    ProgressionTarget: string
 }
